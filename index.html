@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>Trial  Webmap Map</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/simplified_0_001_1.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        map.createPane('pane_StamenTerrain_0');
+        map.getPane('pane_StamenTerrain_0').style.zIndex = 400;
+        var layer_StamenTerrain_0 = L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png', {
+            pane: 'pane_StamenTerrain_0',
+            opacity: 1.0,
+            attribution: '<a href="https://maps.stamen.com/">Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_StamenTerrain_0;
+        map.addLayer(layer_StamenTerrain_0);
+        function pop_simplified_0_001_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">BRGY</th>\
+                        <td>' + (feature.properties['BRGY'] !== null ? autolinker.link(feature.properties['BRGY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CITY</th>\
+                        <td>' + (feature.properties['CITY'] !== null ? autolinker.link(feature.properties['CITY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PROV</th>\
+                        <td>' + (feature.properties['PROV'] !== null ? autolinker.link(feature.properties['PROV'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">REGION</th>\
+                        <td>' + (feature.properties['REGION'] !== null ? autolinker.link(feature.properties['REGION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">RURBAN_DIL</th>\
+                        <td>' + (feature.properties['RURBAN_DIL'] !== null ? autolinker.link(feature.properties['RURBAN_DIL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_simplified_0_001_1_0() {
+            return {
+                pane: 'pane_simplified_0_001_1',
+                opacity: 1,
+                color: 'rgba(255,255,255,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(181,141,19,0.7)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_simplified_0_001_1');
+        map.getPane('pane_simplified_0_001_1').style.zIndex = 401;
+        map.getPane('pane_simplified_0_001_1').style['mix-blend-mode'] = 'normal';
+        var layer_simplified_0_001_1 = new L.geoJson(json_simplified_0_001_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_simplified_0_001_1',
+            layerName: 'layer_simplified_0_001_1',
+            pane: 'pane_simplified_0_001_1',
+            onEachFeature: pop_simplified_0_001_1,
+            style: style_simplified_0_001_1_0,
+        });
+        bounds_group.addLayer(layer_simplified_0_001_1);
+        map.addLayer(layer_simplified_0_001_1);
+            var title = new L.Control();
+            title.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info');
+                this.update();
+                return this._div;
+            };
+            title.update = function () {
+                this._div.innerHTML = '<h2>Trial  Webmap Map</h2>';
+            };
+            title.addTo(map);
+            var abstract = new L.Control({'position':'topright'});
+            abstract.onAdd = function (map) {
+                this._div = L.DomUtil.create('div',
+                'leaflet-control abstract');
+                this._div.id = 'abstract'
+
+                    abstract.show();
+                    return this._div;
+                };
+                abstract.show = function () {
+                    this._div.classList.remove("abstract");
+                    this._div.classList.add("abstractUncollapsed");
+                    this._div.innerHTML = 'This is a trial webmap for the brgy shapefile.';
+            };
+            abstract.addTo(map);
+        setBounds();
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"REGION": "str","PROV": "str","RURBAN_DIL": "str"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + keyS).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_REGION = document.createElement('div');
+            div_REGION.id = "div_REGION";
+            div_REGION.className= "filterselect";
+            document.getElementById("menu").appendChild(div_REGION);
+            sel_REGION = document.createElement('select');
+            sel_REGION.multiple = true;
+            sel_REGION.size = 10;
+            sel_REGION.id = "sel_REGION";
+            var REGION_options_str = "<option value='' unselected></option>";
+            sel_REGION.onchange = function(){filterFunc()};
+            REGION_options_str  += '<option value="AUTONOMOUS REGION IN MUSLIM MINDANAO (ARMM)">AUTONOMOUS REGION IN MUSLIM MINDANAO (ARMM)</option>';
+            REGION_options_str  += '<option value="CORDILLERA ADMINISTRATIVE REGION (CAR)">CORDILLERA ADMINISTRATIVE REGION (CAR)</option>';
+            REGION_options_str  += '<option value="MIMAROPA REGION">MIMAROPA REGION</option>';
+            REGION_options_str  += '<option value="NATIONAL CAPITAL REGION">NATIONAL CAPITAL REGION</option>';
+            REGION_options_str  += '<option value="REGION I (ILOCOS REGION)">REGION I (ILOCOS REGION)</option>';
+            REGION_options_str  += '<option value="REGION II (CAGAYAN VALLEY)">REGION II (CAGAYAN VALLEY)</option>';
+            REGION_options_str  += '<option value="REGION III (CENTRAL LUZON)">REGION III (CENTRAL LUZON)</option>';
+            REGION_options_str  += '<option value="REGION IV-A (CALABARZON)">REGION IV-A (CALABARZON)</option>';
+            REGION_options_str  += '<option value="REGION IX (ZAMBOANGA PENINSULA)">REGION IX (ZAMBOANGA PENINSULA)</option>';
+            REGION_options_str  += '<option value="REGION V (BICOL REGION)">REGION V (BICOL REGION)</option>';
+            REGION_options_str  += '<option value="REGION VI (WESTERN VISAYAS)">REGION VI (WESTERN VISAYAS)</option>';
+            REGION_options_str  += '<option value="REGION VII (CENTRAL VISAYAS)">REGION VII (CENTRAL VISAYAS)</option>';
+            REGION_options_str  += '<option value="REGION VIII (EASTERN VISAYAS)">REGION VIII (EASTERN VISAYAS)</option>';
+            REGION_options_str  += '<option value="REGION X (NORTHERN MINDANAO)">REGION X (NORTHERN MINDANAO)</option>';
+            REGION_options_str  += '<option value="REGION XI (DAVAO REGION)">REGION XI (DAVAO REGION)</option>';
+            REGION_options_str  += '<option value="REGION XII (SOCCSKSARGEN)">REGION XII (SOCCSKSARGEN)</option>';
+            REGION_options_str  += '<option value="REGION XIII (CARAGA)">REGION XIII (CARAGA)</option>';
+            sel_REGION.innerHTML = REGION_options_str;
+            div_REGION.appendChild(sel_REGION);
+            var lab_REGION = document.createElement('div');
+            lab_REGION.innerHTML = 'REGION';
+            lab_REGION.className = 'filterlabel';
+            div_REGION.appendChild(lab_REGION);
+            var reset_REGION = document.createElement('div');
+            reset_REGION.innerHTML = 'clear filter';
+            reset_REGION.className = 'filterlabel';
+            reset_REGION.onclick = function() {
+                var options = document.getElementById("sel_REGION").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_REGION.appendChild(reset_REGION);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_PROV = document.createElement('div');
+            div_PROV.id = "div_PROV";
+            div_PROV.className= "filterselect";
+            document.getElementById("menu").appendChild(div_PROV);
+            sel_PROV = document.createElement('select');
+            sel_PROV.multiple = true;
+            sel_PROV.size = 10;
+            sel_PROV.id = "sel_PROV";
+            var PROV_options_str = "<option value='' unselected></option>";
+            sel_PROV.onchange = function(){filterFunc()};
+            PROV_options_str  += '<option value="ABRA">ABRA</option>';
+            PROV_options_str  += '<option value="AGUSAN DEL NORTE">AGUSAN DEL NORTE</option>';
+            PROV_options_str  += '<option value="AGUSAN DEL SUR">AGUSAN DEL SUR</option>';
+            PROV_options_str  += '<option value="AKLAN">AKLAN</option>';
+            PROV_options_str  += '<option value="ALBAY">ALBAY</option>';
+            PROV_options_str  += '<option value="ANTIQUE">ANTIQUE</option>';
+            PROV_options_str  += '<option value="APAYAO">APAYAO</option>';
+            PROV_options_str  += '<option value="AURORA">AURORA</option>';
+            PROV_options_str  += '<option value="BASILAN">BASILAN</option>';
+            PROV_options_str  += '<option value="BATAAN">BATAAN</option>';
+            PROV_options_str  += '<option value="BATANES">BATANES</option>';
+            PROV_options_str  += '<option value="BATANGAS">BATANGAS</option>';
+            PROV_options_str  += '<option value="BENGUET">BENGUET</option>';
+            PROV_options_str  += '<option value="BILIRAN">BILIRAN</option>';
+            PROV_options_str  += '<option value="BOHOL">BOHOL</option>';
+            PROV_options_str  += '<option value="BUKIDNON">BUKIDNON</option>';
+            PROV_options_str  += '<option value="BULACAN">BULACAN</option>';
+            PROV_options_str  += '<option value="CAGAYAN">CAGAYAN</option>';
+            PROV_options_str  += '<option value="CAMARINES NORTE">CAMARINES NORTE</option>';
+            PROV_options_str  += '<option value="CAMARINES SUR">CAMARINES SUR</option>';
+            PROV_options_str  += '<option value="CAMIGUIN">CAMIGUIN</option>';
+            PROV_options_str  += '<option value="CAPIZ">CAPIZ</option>';
+            PROV_options_str  += '<option value="CATANDUANES">CATANDUANES</option>';
+            PROV_options_str  += '<option value="CAVITE">CAVITE</option>';
+            PROV_options_str  += '<option value="CEBU">CEBU</option>';
+            PROV_options_str  += '<option value="CITY OF ISABELA (NOT A PROVINCE)">CITY OF ISABELA (NOT A PROVINCE)</option>';
+            PROV_options_str  += '<option value="COTABATO (NORTH COTABATO)">COTABATO (NORTH COTABATO)</option>';
+            PROV_options_str  += '<option value="COTABATO CITY (NOT A PROVINCE)">COTABATO CITY (NOT A PROVINCE)</option>';
+            PROV_options_str  += '<option value="DAVAO DE ORO (COMPOSTELA VALLEY)">DAVAO DE ORO (COMPOSTELA VALLEY)</option>';
+            PROV_options_str  += '<option value="DAVAO DEL NORTE">DAVAO DEL NORTE</option>';
+            PROV_options_str  += '<option value="DAVAO DEL SUR">DAVAO DEL SUR</option>';
+            PROV_options_str  += '<option value="DAVAO OCCIDENTAL">DAVAO OCCIDENTAL</option>';
+            PROV_options_str  += '<option value="DAVAO ORIENTAL">DAVAO ORIENTAL</option>';
+            PROV_options_str  += '<option value="DINAGAT ISLANDS">DINAGAT ISLANDS</option>';
+            PROV_options_str  += '<option value="EASTERN SAMAR">EASTERN SAMAR</option>';
+            PROV_options_str  += '<option value="GUIMARAS">GUIMARAS</option>';
+            PROV_options_str  += '<option value="IFUGAO">IFUGAO</option>';
+            PROV_options_str  += '<option value="ILOCOS NORTE">ILOCOS NORTE</option>';
+            PROV_options_str  += '<option value="ILOCOS SUR">ILOCOS SUR</option>';
+            PROV_options_str  += '<option value="ILOILO">ILOILO</option>';
+            PROV_options_str  += '<option value="ISABELA">ISABELA</option>';
+            PROV_options_str  += '<option value="KALINGA">KALINGA</option>';
+            PROV_options_str  += '<option value="LA UNION">LA UNION</option>';
+            PROV_options_str  += '<option value="LAGUNA">LAGUNA</option>';
+            PROV_options_str  += '<option value="LANAO DEL NORTE">LANAO DEL NORTE</option>';
+            PROV_options_str  += '<option value="LANAO DEL SUR">LANAO DEL SUR</option>';
+            PROV_options_str  += '<option value="LEYTE">LEYTE</option>';
+            PROV_options_str  += '<option value="MAGUINDANAO">MAGUINDANAO</option>';
+            PROV_options_str  += '<option value="MARINDUQUE">MARINDUQUE</option>';
+            PROV_options_str  += '<option value="MASBATE">MASBATE</option>';
+            PROV_options_str  += '<option value="MISAMIS OCCIDENTAL">MISAMIS OCCIDENTAL</option>';
+            PROV_options_str  += '<option value="MISAMIS ORIENTAL">MISAMIS ORIENTAL</option>';
+            PROV_options_str  += '<option value="MOUNTAIN PROVINCE">MOUNTAIN PROVINCE</option>';
+            PROV_options_str  += '<option value="NATIONAL CAPITAL REGION">NATIONAL CAPITAL REGION</option>';
+            PROV_options_str  += '<option value="NEGROS OCCIDENTAL">NEGROS OCCIDENTAL</option>';
+            PROV_options_str  += '<option value="NEGROS ORIENTAL">NEGROS ORIENTAL</option>';
+            PROV_options_str  += '<option value="NORTHERN SAMAR">NORTHERN SAMAR</option>';
+            PROV_options_str  += '<option value="NUEVA ECIJA">NUEVA ECIJA</option>';
+            PROV_options_str  += '<option value="NUEVA VIZCAYA">NUEVA VIZCAYA</option>';
+            PROV_options_str  += '<option value="OCCIDENTAL MINDORO">OCCIDENTAL MINDORO</option>';
+            PROV_options_str  += '<option value="ORIENTAL MINDORO">ORIENTAL MINDORO</option>';
+            PROV_options_str  += '<option value="PALAWAN">PALAWAN</option>';
+            PROV_options_str  += '<option value="PAMPANGA">PAMPANGA</option>';
+            PROV_options_str  += '<option value="PANGASINAN">PANGASINAN</option>';
+            PROV_options_str  += '<option value="QUEZON">QUEZON</option>';
+            PROV_options_str  += '<option value="QUIRINO">QUIRINO</option>';
+            PROV_options_str  += '<option value="RIZAL">RIZAL</option>';
+            PROV_options_str  += '<option value="ROMBLON">ROMBLON</option>';
+            PROV_options_str  += '<option value="SAMAR (WESTERN SAMAR)">SAMAR (WESTERN SAMAR)</option>';
+            PROV_options_str  += '<option value="SARANGANI">SARANGANI</option>';
+            PROV_options_str  += '<option value="SIQUIJOR">SIQUIJOR</option>';
+            PROV_options_str  += '<option value="SORSOGON">SORSOGON</option>';
+            PROV_options_str  += '<option value="SOUTH COTABATO">SOUTH COTABATO</option>';
+            PROV_options_str  += '<option value="SOUTHERN LEYTE">SOUTHERN LEYTE</option>';
+            PROV_options_str  += '<option value="SULTAN KUDARAT">SULTAN KUDARAT</option>';
+            PROV_options_str  += '<option value="SULU">SULU</option>';
+            PROV_options_str  += '<option value="SURIGAO DEL NORTE">SURIGAO DEL NORTE</option>';
+            PROV_options_str  += '<option value="SURIGAO DEL SUR">SURIGAO DEL SUR</option>';
+            PROV_options_str  += '<option value="TARLAC">TARLAC</option>';
+            PROV_options_str  += '<option value="TAWI-TAWI">TAWI-TAWI</option>';
+            PROV_options_str  += '<option value="ZAMBALES">ZAMBALES</option>';
+            PROV_options_str  += '<option value="ZAMBOANGA DEL NORTE">ZAMBOANGA DEL NORTE</option>';
+            PROV_options_str  += '<option value="ZAMBOANGA DEL SUR">ZAMBOANGA DEL SUR</option>';
+            PROV_options_str  += '<option value="ZAMBOANGA SIBUGAY">ZAMBOANGA SIBUGAY</option>';
+            sel_PROV.innerHTML = PROV_options_str;
+            div_PROV.appendChild(sel_PROV);
+            var lab_PROV = document.createElement('div');
+            lab_PROV.innerHTML = 'PROV';
+            lab_PROV.className = 'filterlabel';
+            div_PROV.appendChild(lab_PROV);
+            var reset_PROV = document.createElement('div');
+            reset_PROV.innerHTML = 'clear filter';
+            reset_PROV.className = 'filterlabel';
+            reset_PROV.onclick = function() {
+                var options = document.getElementById("sel_PROV").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_PROV.appendChild(reset_PROV);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_RURBAN_DIL = document.createElement('div');
+            div_RURBAN_DIL.id = "div_RURBAN_DIL";
+            div_RURBAN_DIL.className= "filterselect";
+            document.getElementById("menu").appendChild(div_RURBAN_DIL);
+            sel_RURBAN_DIL = document.createElement('select');
+            sel_RURBAN_DIL.multiple = true;
+            sel_RURBAN_DIL.size = 4;
+            sel_RURBAN_DIL.id = "sel_RURBAN_DIL";
+            var RURBAN_DIL_options_str = "<option value='' unselected></option>";
+            sel_RURBAN_DIL.onchange = function(){filterFunc()};
+            RURBAN_DIL_options_str  += '<option value="NULL">NULL</option>';
+            RURBAN_DIL_options_str  += '<option value="-">-</option>';
+            RURBAN_DIL_options_str  += '<option value="R">R</option>';
+            RURBAN_DIL_options_str  += '<option value="U">U</option>';
+            sel_RURBAN_DIL.innerHTML = RURBAN_DIL_options_str;
+            div_RURBAN_DIL.appendChild(sel_RURBAN_DIL);
+            var lab_RURBAN_DIL = document.createElement('div');
+            lab_RURBAN_DIL.innerHTML = 'RURBAN_DIL';
+            lab_RURBAN_DIL.className = 'filterlabel';
+            div_RURBAN_DIL.appendChild(lab_RURBAN_DIL);
+            var reset_RURBAN_DIL = document.createElement('div');
+            reset_RURBAN_DIL.innerHTML = 'clear filter';
+            reset_RURBAN_DIL.className = 'filterlabel';
+            reset_RURBAN_DIL.onclick = function() {
+                var options = document.getElementById("sel_RURBAN_DIL").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_RURBAN_DIL.appendChild(reset_RURBAN_DIL);
+        </script>
+    </body>
+</html>
